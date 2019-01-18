@@ -1,15 +1,35 @@
-# Chapter 4: Selected classes from Java API and arrays
+# Chapter 4: Selected classes from Java API and arrays <!-- omit in toc -->
 
-## Table of Contents
+## Tables of Content <!-- omit in toc -->
 
-* [String](#String)
+- [String](#string)
+  - [Creating String](#creating-string)
+  - [String Methods](#string-methods)
+    - [1. charAt()](#1-charat)
+    - [2. indexOf()](#2-indexof)
+    - [3. subString()](#3-substring)
+    - [4. trim()](#4-trim)
+    - [5. replace()](#5-replace)
+    - [6. length](#6-length)
+    - [7. startWith() & beginWidth()](#7-startwith--beginwidth)
+  - [Operators](#operators)
+- [StringBuilder](#stringbuilder)
+  - [Comparison with String and StringBuffer](#comparison-with-string-and-stringbuffer)
+  - [Creating StringBuilder](#creating-stringbuilder)
+  - [StringBuilder methods](#stringbuilder-methods)
+    - [1. append()](#1-append)
+    - [2. insert()](#2-insert)
+    - [3. delete() & deleteCharAt()](#3-delete--deletecharat)
+    - [4. reverse()](#4-reverse)
+    - [5. replace()](#5-replace-1)
+    - [6. subSequence()](#6-subsequence)
 
 ## String
 
-* Class. Default value is null.
-* Immutable => Once created, a string value can't be modified. String methods that return a modified String value returned a new String object with the modified value. Original String value remains the same.
+- Class. Default value is null.
+- Immutable => Once created, a string value can't be modified. String methods that return a modified String value returned a new String object with the modified value. Original String value remains the same.
 
-### Ways of Creating String
+### Creating String
 
 1. keyword **new**. String objects created this way is never pooled.
 2. assignment operator. new String object created only if a String object with same value isn't found in String constant pool.
@@ -33,25 +53,25 @@ System.out.println("Morning");
 //Total of 6 String objects created in this example
 ```
 
-### Methods
+### String Methods
 
 > When chained, the methods are evaluated from left to right
 
-#### charAt()
+#### 1. charAt()
 
-* Retrieve character at a specified index of String
-* *runtime exception* if non-existent index
+- Retrieve character at a specified index of String
+- *runtime exception* if non-existent index
 
 ``` java
 String letters = "ABCAB";
 System.out.println(letters.charAt(3)); //'A'
 ```
 
-#### indexOf()
+#### 2. indexOf()
 
-* search for first matching position of char or String and return its index
-* return -1 if no match
-* By default, search from first char but you can also set starting position
+- search for first matching position of char or String and return its index
+- return -1 if no match
+- By default, search from first char but you can also set starting position
 
 ``` java
 String letters = "ABCAB";
@@ -61,11 +81,11 @@ System.out.println(letters.indexOf("CA")); //2
 System.out.println(letters.indexOf('B',2)); //4
 ```
 
-#### substring()
+#### 3. subString()
 
-* return a substring of a String from the position specified to the end of String
-* substring method doesn't include character at end position
-  * Length of String returned by subString = end - start
+- return a substring of a String from the position specified to the end of String
+- substring method doesn't include character at end position
+  - Length of String returned by subString = end - start
 
 ``` java
 String letters = "ABCAB";
@@ -73,70 +93,174 @@ System.out.println(letters.subString(2)); //"CAB"
 System.out.println(letters.subString(1,3)); //"BC"
 ```
 
-#### trim()
+#### 4. trim()
 
-* return a new String by removing all leading and trailing *white space*(new lines,spaces or tabs) in a String
-* method doesn't remove the space within a String
+- return a new String by removing all leading and trailing *white space*(new lines,spaces or tabs) in a String
+- method doesn't remove the space within a String
 
 ``` java
 String letters = " AB CAB      ";
 System.out.println(letters.trim()); //"AB CAB"
 ```
 
-#### replace()
+#### 5. replace()
 
-* return a new String by replacing all occurences of a char/String with another char/String
-
-``` java
-String letters = "ABCAB";
-System.out.println(letters.replace('B','b')); // "AbCAb"
-System.out.println(letters.replace("CA",12)); // "AB12b"
-```
-
-#### length()
-
-* return length of String
-
-``` java
-System.out.println(letters.replace("Shreya".length)); // 5
-```
-
-#### startWith() and beginWidth()
-
-* return a new String by replacing all occurences of a char/String with another char/String
+- return a new String by replacing all occurences of a char/String with another char/String
 
 ``` java
 String letters = "ABCAB";
-System.out.println(letters.replace('B','b')); // "AbCAb"
-System.out.println(letters.replace("CA",12)); // "AB12b"
+System.out.println(letters.replace('B','b')); //"AbCAb"
+System.out.println(letters.replace("CA",12)); //"AB12b"
 ```
 
-### String objects and operators
+#### 6. length
 
-* Concatenation: + and +=
+- return length of String
+
+``` java
+System.out.println(letters.replace("Shreya".length)); //5
+```
+
+#### 7. startWith() & beginWidth()
+
+- return a new String by replacing all occurences of a char/String with another char/String
+
+``` java
+String letters = "ABCAB";
+System.out.println(letters.replace('B','b')); //"AbCAb"
+System.out.println(letters.replace("CA",12)); //"AB12b"
+```
+
+### Operators
+
+- Concatenation: + and +=**
 
 ``` java
 String aString = 10 + 12 + "OCJA";
-System.out.println(aString); // "22OCJA"
+System.out.println(aString); //"22OCJA"
 
 //treating numbers as String values
 aString = "" + 10 + 12 + "OCJA";
-System.out.println(aString); // "1012OCJA"
+System.out.println(aString); //"1012OCJA"
 ```
 
-* Equality: == and !=; equals()
+- Equality: == and !=; equals()**
 
 ==  compares whether the reference variables refer to same objects, and method **equals** compares the String values for equality.  
 
 ``` java
 String var1 = new String("Java");
 String var2 = new String("Java");
-System.out.println(var1 == var2); // false
-System.out.println(var1.equals(var2)); // true
+System.out.println(var1 == var2); //false
+System.out.println(var1.equals(var2)); //true
 
 String var3 = "code";
 String var4 = "code";
-//var3 and var4 refer to the same String object created and shared in String pool
-System.out.println(var3 == var4); // true
-System.out.println(var1.equals(var4)); // true
+//var3 & var4 refer to same String object in String pool
+System.out.println(var3 == var4); //true
+System.out.println(var1.equals(var4)); //true
+```
+
+## StringBuilder
+
+### Comparison with String and StringBuffer
+
+- **String:** immutable. Creates new String objects instead of modifying existing one
+- **StringBuilder:** mutable. Good for dealing with larger strings or modifying often. Single threaded to prevent inconsistencies in the values but additional overhead
+- **StringBuffer:** same functionality and methods as StringBuilder but sychronized(multiple threads) where necessary.
+
+### Creating StringBuilder
+
+can be created using overloaded constructors
+
+``` java
+StringBuilder sb1 = new StringBuilder();
+StringBuilder sb2 = new StringBuilder(sb1);
+StringBuilder sb3 = new StringBuilder(50);
+StringBuilder sb4 = new StringBuilder("Shreya Gupta");
+```
+
+### StringBuilder methods
+
+- `charAt(),indexOf(),subString()` works the same as String class
+- `trim()` not in StringBuilder. **Compilation error**
+
+#### 1. append()
+
+Insert data to end of StringBuilder object. Accept any data type *(boolean,int,char,double,String,char array,StringBuilder,Object etc)*
+
+``` java
+StringBuilder sb1 = new StringBuilder();
+char[] name = {'J','a','v','a','8'};
+System.out.println(sb1.append(name,1,3)); //ava
+
+StringBuilder sb2 = new StringBuilder();
+sb2.append("Java");
+sb2.append(new Person("Oracle"));
+//returns class name then @ and hexadecimal of object hash code
+System.out.println(sb2) //JavaPerson@126b249
+```
+
+#### 2. insert()
+
+Insert at any position. Accept any data type.
+
+``` java
+StringBuilder sb1 = new StringBuilder("Bon");
+sb1.insert(2,'r');
+System.out.println(sb1); //Born
+
+StringBuilder sb2 = new StringBuilder("123");
+char[] name = {'J','a','v','a','8'};
+sb2.insert(1,name,1,3);
+System.out.println(sb2); //1ava23
+```
+
+#### 3. delete() & deleteCharAt()
+
+- delete removes substring
+- deleteCharAt removes single char
+
+``` java
+StringBuilder sb1 = new StringBuilder("0123456");
+sb1.delete(2,4); //exclude position 4
+System.out.println(sb1); //01456
+
+StringBuilder sb2 = new StringBuilder("0123456");
+sb2.deleteCharAt(2);
+System.out.println(sb2); //013456
+```
+
+#### 4. reverse()
+
+reverse sequence of characters. Can't use method reverse to reverse a substring of StringBuider.
+
+``` java
+StringBuilder sb1 = new StringBuilder("0123456");
+sb1.reverse(); //exclude position 4
+System.out.println(sb1); //6543210
+```
+
+#### 5. replace()
+
+Different from replace() in String class. Replaces sequence of characters, identified by their positions, with another String.
+
+``` java
+//StringBuilder
+StringBuilder sb1 = new StringBuilder("0123456");
+sb1.replace(2,4,"ABCD");
+System.out.println(sb1); //01ABCD456
+```
+
+![replaceComparison](images/replaceComparison.png)
+
+#### 6. subSequence()
+
+similar to subString() but does not modify existing value
+
+``` java
+//StringBuilder
+StringBuilder sb1 = new StringBuilder("0123456");
+System.out.println(sb1.subSequence(2,4)); //23
+System.out.println(sb1); //0123456
 ```
