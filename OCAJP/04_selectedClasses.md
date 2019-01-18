@@ -1,5 +1,7 @@
 # Chapter 4: Selected classes from Java API and arrays <!-- omit in toc -->
 
+[Back to Home](../Readme.md)
+
 ## Tables of Content <!-- omit in toc -->
 
 - [String](#string)
@@ -23,16 +25,33 @@
     - [4. reverse()](#4-reverse)
     - [5. replace()](#5-replace-1)
     - [6. subSequence()](#6-subsequence)
+- [Arrays](#arrays)
+  - [What is an array](#what-is-an-array)
+    - [1. Array declaration](#1-array-declaration)
+    - [2. Array allocation](#2-array-allocation)
+    - [3. Array intialization](#3-array-intialization)
+    - [4. Combine declaration,allocation,intialization](#4-combine-declarationallocationintialization)
+  - [Arrays of type interface,abstract class & class object](#arrays-of-type-interfaceabstract-class--class-object)
+    - [Interface type](#interface-type)
+    - [Abstract class type](#abstract-class-type)
+    - [Class object](#class-object)
+  - [Common examples](#common-examples)
+    - [Compilation errors](#compilation-errors)
+    - [Compiled but runtime exception](#compiled-but-runtime-exception)
+    - [Acceptable](#acceptable)
 
 ## String
 
 - Class. Default value is null.
+> Class: A class defines object properties  
+> Object: An instance of the class
+
 - Immutable => Once created, a string value can't be modified. String methods that return a modified String value returned a new String object with the modified value. Original String value remains the same.
 
 ### Creating String
 
-1. keyword **new**. String objects created this way is never pooled.
-2. assignment operator. new String object created only if a String object with same value isn't found in String constant pool.
+1. keyword **new**: String objects created this way is never pooled.
+2. assignment operator: new String object created only if a String object with same value isn't found in String constant pool.
 
 ``` java
 String str1 = new String("Paul");
@@ -263,4 +282,135 @@ similar to subString() but does not modify existing value
 StringBuilder sb1 = new StringBuilder("0123456");
 System.out.println(sb1.subSequence(2,4)); //23
 System.out.println(sb1); //0123456
+```
+
+## Arrays
+
+### What is an array
+
+- An object that stores a collection of primitive data types or objects.
+- multidimensional array can be asymmetrical with different number of columns for each rows.
+
+#### 1. Array declaration
+
+To declare an array, specfy its type followed by its name.  
+Square brackets can follow by type or name.
+
+> Arrays can be of any data type other than null 
+
+``` java
+int[] multiArr[];
+int[][] multiArr;
+int multiArr[][];
+
+int anArr[];
+int[] anArr;
+```
+
+#### 2. Array allocation
+
+- Size must be integer.
+- Size **can't expand or reduce** once allocated by keyword **new**.  
+  i.e. array element can set null but cannot be removed
+- Once allocated, array elements store their default values.
+
+    | Array type          | Default |
+    | ------------------- | :-----: |
+    | object              |  null   |
+    | byte,short,int,long |    0    |
+    | boolean             |  false  |
+    | char                | \u0000  |
+
+``` java
+int[] multiArr[];
+multiArr = new int[2][3];
+```
+
+#### 3. Array intialization
+
+``` java
+int[] multiArr[];
+multiArr = new int[2][3];
+//Intialize by loop
+for(int i=0;i<multiArr.length;i++){
+    for(int j=0;j<multiArr[i].length;j++){
+        multiArr[i][j] = i + j;
+    }
+}
+//Intialize without using loop
+multiArr[0][1] = 10;
+multiArr[1][2] = 1210;
+```
+
+#### 4. Combine declaration,allocation,intialization
+
+- Doesn't specify the array size. Size calculated by number of values assigned to array.
+- Can initialize array without keyword **new**
+
+``` java
+String objArray[] = new String[] {"Harry","Shreya","Paul"}
+
+int[][] a = {
+    {1, 2, 3},{4, 5, 6, 9},{7}
+};
+```
+
+### Arrays of type interface,abstract class & class object
+
+#### Interface type
+
+TODO
+
+#### Abstract class type
+
+TODO
+
+#### Class object
+
+TODO
+
+### Common examples
+
+#### Compilation errors
+
+``` java
+//No elements of array are created when declared.
+int anArr[2];
+//Array size missing
+int intArr = new int[];
+//Array size placed incorrectly
+int intArr2[2] = new int[];
+//Array size has to evalute to int
+int intArr3 = new int[2.4];
+//missing keyword new
+int intArr4[];
+intArr = {0,1};
+
+int[] multiArr[];
+//Mismatch in square brackets
+multiArr = new int[];
+//size in first square bracket missing
+multiArr = new int[][]3;
+```
+
+#### Compiled but runtime exception
+
+``` java
+int intArr = new int[2];
+System.out.println(intArr[3]);
+System.out.println(intArr[-10]);
+/*ArrayIndexOutOfBoundsException
+Invalid array index value is passed in*/
+
+String multiStrArr[][] = new String[][]{
+    {"A","B"},null,{"Jan","Feb","Mar"}
+}
+```
+
+#### Acceptable
+
+``` java
+String strArr = new String[2*5];
+//Okay to defined size in only first square brackets
+int multiArr[][] = new int[2][];
 ```
