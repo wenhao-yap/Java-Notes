@@ -12,7 +12,7 @@
     - [3. subString()](#3-substring)
     - [4. trim()](#4-trim)
     - [5. replace()](#5-replace)
-    - [6. length](#6-length)
+    - [6. length()](#6-length)
     - [7. startWith() & beginWidth()](#7-startwith--beginwidth)
   - [Operators](#operators)
 - [StringBuilder](#stringbuilder)
@@ -31,14 +31,26 @@
     - [2. Array allocation](#2-array-allocation)
     - [3. Array intialization](#3-array-intialization)
     - [4. Combine declaration,allocation,intialization](#4-combine-declarationallocationintialization)
-  - [Arrays of type interface,abstract class & class object](#arrays-of-type-interfaceabstract-class--class-object)
-    - [Interface type](#interface-type)
-    - [Abstract class type](#abstract-class-type)
-    - [Class object](#class-object)
+  - [Arrays of type interface,abstract class & object](#arrays-of-type-interfaceabstract-class--object)
+    - [Interface](#interface)
+    - [Abstract class](#abstract-class)
+    - [Object](#object)
   - [Common examples](#common-examples)
     - [Compilation errors](#compilation-errors)
     - [Compiled but runtime exception](#compiled-but-runtime-exception)
     - [Acceptable](#acceptable)
+- [ArrayList](#arraylist)
+  - [What is an ArrayList](#what-is-an-arraylist)
+  - [ArrayList methods](#arraylist-methods)
+    - [1. Adding elements](#1-adding-elements)
+      - [add()](#add)
+      - [addAll](#addall)
+    - [2. Iterating over elements](#2-iterating-over-elements)
+      - [for loop](#for-loop)
+      - [ListIterator](#listiterator)
+    - [3. Removing elements](#3-removing-elements)
+    - [4. Cloning an arraylist](#4-cloning-an-arraylist)
+    - [5. Other methods](#5-other-methods)
 
 ## String
 
@@ -132,12 +144,12 @@ System.out.println(letters.replace('B','b')); //"AbCAb"
 System.out.println(letters.replace("CA",12)); //"AB12b"
 ```
 
-#### 6. length
+#### 6. length()
 
 - return length of String
 
 ``` java
-System.out.println(letters.replace("Shreya".length)); //5
+System.out.println(("Shreya".length()); //6
 ```
 
 #### 7. startWith() & beginWidth()
@@ -290,6 +302,7 @@ System.out.println(sb1); //0123456
 
 - An object that stores a collection of primitive data types or objects.
 - multidimensional array can be asymmetrical with different number of columns for each rows.
+- `length` : to find no. of elements in array. *[Note it is not length() like in String]*
 
 #### 1. Array declaration
 
@@ -355,19 +368,47 @@ int[][] a = {
 };
 ```
 
-### Arrays of type interface,abstract class & class object
+### Arrays of type interface,abstract class & object
 
-#### Interface type
+#### Interface
 
-TODO
+Elements are either null or objects that implement the relevant interface type.
 
-#### Abstract class type
+``` java
+interface MyInterface {}
+class MyClass1 implements MyInterface {}
+class MyClass2 implements MyInterface {}
+MyInterface[] interfaceArr = new myInterface[]{
+    new MyClass1(),null,new MyClass2()
+}
+```
 
-TODO
+#### Abstract class
 
-#### Class object
+Elements are either null or objects of concrete classes that extend the relevant abstract class.
 
-TODO
+``` java
+abstract class Vehicle{}
+class Car implements Vehicle {}
+class Bus implements Vehicle {}
+Vehicle[] vehiclerArr = new Vehicle[]{
+    new Car(),new Bus(),null
+}
+```
+
+#### Object
+
+``` java
+inerface MyInterface {}
+class MyClass1 implements MyInterface{}
+abstract class Vehicle{}
+class Car implements Vehicle {}
+Object[] ObjArr = new Object[]{
+    new MyClass1(),null,new Car(),
+    new java.util.Date(),new String("name"),
+    new Integer[7]
+}
+```
 
 ### Common examples
 
@@ -413,4 +454,139 @@ String multiStrArr[][] = new String[][]{
 String strArr = new String[2*5];
 //Okay to defined size in only first square brackets
 int multiArr[][] = new int[2][];
+```
+
+## ArrayList
+
+### What is an ArrayList
+
+- ArrayList uses an array to store its element. However, it is **resizable** unlike array.
+- Key properties
+  - implements the interface
+  - allows null and duplicate values
+  - implements all list operations(add/modify/delete values)
+  - maintains insertion order
+  - use either Iterator or ListIterator to iterate
+  - supports generic, making it type safe
+
+``` java
+//Missing object type on RHS -> works in Java 7 and above
+ArrayList<String> myArrList = new ArrayList<>();
+```
+
+### ArrayList methods
+
+#### 1. Adding elements
+
+##### add()
+
+``` java
+ArrayList<String> myArrList = new ArrayList<>();
+list.add("one");
+list.add(1,"three"); //add in specified position
+```
+
+##### addAll
+
+- `addAll(Collection<? extends E> c)` : appends all elements in specified collection to end of list
+- `addAll(int index,Collection<? extends E> c)` : inserts all elements in specified collection into list, starting at specified position
+
+``` java
+ArrayList<String> myArrList = new ArrayList<>();
+list.add("one");
+list.add("two");
+ArrayList<String> yourArrList = new ArrayList<>();
+yourArrList.add("three");
+yourArrList.add("four");
+
+myArrList.addAll(1,yourArrList);
+/*------------------------------------------------
+- Elements in myArrList: one, three, four, two
+- Elements of yourArrList aren't removed from it.
+- Objects in yourArrList is referred from myArrList
+-------------------------------------------------*/
+```
+
+> What happen if you modify common object references in these lists?  
+> Case 1: Reassign object reference in either lists  
+> &nbsp;&nbsp;&nbsp;&nbsp;Values in the other list remain unchanged  
+> Case 2: Modify internals of any common list  
+> &nbsp;&nbsp;&nbsp;&nbsp;Changes reflected in both lists
+
+#### 2. Iterating over elements
+
+##### for loop
+
+Cannot to remove elements during iteration
+
+``` java
+ArrayList<String> myArrList = new ArrayList<>();
+myArrList.add("One");
+myArrList.add("Two");
+
+//replace element at position 1("Two")
+myArrList.set(1,"One and Half");
+for(String element: myArrList){
+    System.out.println(element);
+}
+```
+
+##### ListIterator
+
+Can remove elements during iteration
+
+``` java
+ListIterator<String> Iterator = myArrList.listIterator();
+for(iterator.hasNext()){
+    System.out.println(iterator.next());
+}
+```
+
+#### 3. Removing elements
+
+- `remove(int index)` : removes element at specified position in list
+- `remove(Object o)` : removes first occurence of specified elemnt from list if present
+- `clear()` : remove all elements
+
+#### 4. Cloning an arraylist
+
+`clone()` : returns a shallow copy i.e. element references are copied but the objects are not
+
+``` java
+ArrayList<StringBuilder> myArrList = new ArrayList<>();
+StringBuilder sb1 = new StringBuilder("Jan");
+StringBuilder sb2 = new StringBuilder("Feb");
+myArrList.add(sb1);
+myArrList.add(sb2);
+
+/* myArrList and assigned refer to same object*/
+ArrayList<StringBuilder> assigned = myArrList;
+/* myArrList and assigned refer to different object*/
+ArrayList<StringBuilder> cloned = (ArrayList<StringBuilder>)myArrList.clone();
+
+System.out.println(myArrList == assigned);
+System.out.println(myArrList == cloned);
+```
+
+#### 5. Other methods
+
+- `get(int index)` : returns element at specified position
+- `size()` : returns number of elements in this list
+- `toArray()` : return an array containing all elements
+
+> Methods below require strong understanding of equality.
+> By default, objects are considered equal if they are referred to same variable (String class is an exception with its pool of String objects)
+
+- `contains(Object o)` : returns true if list contains specified element
+- `indexOf(Object o)` : returns index of first occurence of specified element or -1 if doesn't contain
+- `lastIndexOf(Object o)` : returns index of last occurence of specified element or -1 if doesn't contain
+
+``` java
+ArrayList<StringBuilder> myArrList = new ArrayList<>();
+StringBuilder sb1 = new StringBuilder("Jan");
+myArrList.add(sb1);
+System.out.println(myArrList.contains(new StringBuilder("Jan"));
+//false
+System.out.println(myArrList.contains(sb1));
+//true
 ```
