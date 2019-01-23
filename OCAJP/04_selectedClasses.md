@@ -51,6 +51,21 @@
     - [3. Removing elements](#3-removing-elements)
     - [4. Cloning an arraylist](#4-cloning-an-arraylist)
     - [5. Other methods](#5-other-methods)
+- [Comparing object for equality](#comparing-object-for-equality)
+  - [method equals](#method-equals)
+    - [default implementation](#default-implementation)
+    - [equals in user-defined class](#equals-in-user-defined-class)
+    - [Violation of contract of *equals* method](#violation-of-contract-of-equals-method)
+- [Calendar](#calendar)
+  - [LocalDate](#localdate)
+    - [1. Querying LocalDate](#1-querying-localdate)
+    - [2. Comparing two LocalDate](#2-comparing-two-localdate)
+    - [3. Modify LocalDate](#3-modify-localdate)
+    - [4. Converting to LocalDateTime and epoch date](#4-converting-to-localdatetime-and-epoch-date)
+  - [LocalTime](#localtime)
+  - [LocalDateTime](#localdatetime)
+  - [Period](#period)
+  - [DateTImeFormatter](#datetimeformatter)
 
 ## String
 
@@ -590,3 +605,154 @@ System.out.println(myArrList.contains(new StringBuilder("Jan"));
 System.out.println(myArrList.contains(sb1));
 //true
 ```
+
+## Comparing object for equality
+
+### method equals
+
+#### default implementation
+
+compares whether two object variables refer to the same object.
+
+``` java
+//from java.lang.Object
+public boolean equals(Object obj){
+    return (this == obj);
+}
+```
+
+#### equals in user-defined class
+
+Dont't change method name(*equals*), return type(*boolean*) and parameter type(*Object*) when override in your class
+
+``` java
+class BankAccount {
+    String acctNumber;
+    int acctType;
+    public boolean equals(Object anObject){
+        //check whether comparing same type of object
+        if(anObject instanceof BankAccount){
+            BankAccount b = (BankAccount)anObject;
+            //objects are equal if they have the same values
+            return (acctNumber.euqlas(b.acctNumber) &&
+                acctType == b.acctType)
+        }
+        return false;
+    }
+}
+```
+
+#### Violation of contract of *equals* method
+
+- returns true for a null object passed to it  
+- modifies value of any instance variables of the method parameter passed to it, or of the object on which it is called
+
+``` java
+//contract violation i.e. return true for null object
+public boolean equals(Object anObject){
+    return true;
+}
+```
+
+## Calendar
+
+![replaceComparison](images/prefixInDateAPI.png)
+
+### LocalDate
+
+LocalDate instances are immutable and hence safe to use in multithreaded environment. All methods that seem to maniputate its value return a copy of LocalDate instance.
+
+``` java
+//Accept month as int value
+LocalDate date1 = LocalDate.of(2015,12,27);
+//Accept month as enum constant
+LocalDate date2 = LocalDate.of(2015,Month.DECEMBER,27);
+//Get current date from system clock
+LocalDate date3 = LocalDate.now();
+//from string parsing. month and date values must two digits
+//DateTimeParseException if incalid values is parsed
+LocalDate date4 = LocalDate.parse("2025-08-09");
+```
+
+#### 1. Querying LocalDate
+
+``` java
+LocalDate date = LocalDate.parse("2020-08-30");
+System.out.println(date.getDayOfMonth()); //30
+System.out.println(date.getDayOfWeek()); //SUNDAY
+System.out.println(date.getDayOfYear()); //243
+System.out.println(date.getMonth()); //AUGUST
+System.out.println(date.getMonthValue()); //8
+System.out.println(date.getYear()); //2020
+```
+
+#### 2. Comparing two LocalDate
+
+``` java
+LocalDate shreyaBday = LocalDate.parse("2002-08-30");
+LocalDate shreyaBday = LocalDate.parse("2002-07-29");
+System.out.println(shreyaBday.isBefore(paulBday)); //true
+System.out.println(shreyaBday.isAfter(paulBday)); //false
+```
+
+#### 3. Modify LocalDate
+
+All additions,subtractions or replacements to LocalDate consider leap years
+
+`minusXX()` : return copy of date instance after minusing specified days,months, or years to it
+
+``` java
+LocalDate bday = LocalDate.of(2052,03,10);
+System.out.println(bday.minusDays(10)); //2052-02-29
+System.out.println(bday.minusMonths(2)); //2052-01-10
+System.out.println(bday.minusWeeks(30)); //2051-08-13
+System.out.println(bday.minusYears(1)); //2051-03-10
+```
+
+`plusXX()` : return copy of date instance after adding specified days,months, or years to it
+
+``` java
+LocalDate bday = LocalDate.of(2016,02,29);
+System.out.println(bday.plusDays(1)); //2016-03-01
+System.out.println(bday.plusMonths(1)); //2016-03-29
+System.out.println(bday.plusWeeks(7)); //2016-04-18
+System.out.println(bday.plusYears(1)); //2017-02-28
+```
+
+`withXX()` : returns copy of date instance replacing the specified day,month,or year in it.
+
+``` java
+LocalDate bday = LocalDate.of(2036,02,28);
+System.out.println(bday.withDayOfMonth(1)); //2036-02-01
+System.out.println(bday.withDayOfYear(1)); //2036-01-01
+System.out.println(bday.withMonth(7)); //2036-07-28
+System.out.println(bday.withYears(1)); //0001-02-28
+```
+
+#### 4. Converting to LocalDateTime and epoch date
+
+`atTime()` : Overloaded method. Return LocalDateTime, which stores both date and time. If pass invalid hours,minutes or seconds value to method, it will throw *DateTimeException*  
+
+``` java
+LocalDate dte = LocalDate.of(2016,02,28);
+System.out.println(dte.atTime(16,30)); //2016-02-28T16:30
+System.out.println(dte.atTime(16,30,20)); //2016-02-28T16:30:20
+```
+
+`toEpochDay()` : convert LocalDate to epoch date (count of days from January 1,1970)
+
+### LocalTime
+
+TODO
+
+### LocalDateTime
+
+TODO
+
+### Period
+
+TODO
+
+### DateTImeFormatter
+
+TODO
