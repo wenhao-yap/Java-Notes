@@ -63,9 +63,12 @@
     - [3. Modify LocalDate](#3-modify-localdate)
     - [4. Converting to LocalDateTime and epoch date](#4-converting-to-localdatetime-and-epoch-date)
   - [LocalTime](#localtime)
+    - [LocalTime Methods](#localtime-methods)
   - [LocalDateTime](#localdatetime)
   - [Period](#period)
-  - [DateTImeFormatter](#datetimeformatter)
+    - [Period Methods](#period-methods)
+  - [DateTimeFormatter](#datetimeformatter)
+    - [Instantiate DateTimeFormatter](#instantiate-datetimeformatter)
 
 ## String
 
@@ -743,16 +746,86 @@ System.out.println(dte.atTime(16,30,20)); //2016-02-28T16:30:20
 
 ### LocalTime
 
-TODO
+Immutable. Use 24-hour clock
+
+``` java
+LocaltTime timeHrsMin = LocalTime.of(12,12);
+LocalTime timeHrsMinSec = LocalTime.of(0,12,6);
+LocalTime time = LocalTime.parse("15:08:23");
+//get current time
+LocalDate date3 = LocalTime.now();
+```
+
+#### LocalTime Methods
+
+- `getHour(),getMinute(),getSecond,getNano()`
+
+- `isAfter(),isBefore()` :  
+  check whether time is after or before specified time
+
+- `minusHours(),minusMinutes(),minusSeconds(),minusNanos()`
+
+- `plusHours(),plusMinutes(),plusSeconds(),plusNanos()`
+
+- `withHours(),withMinutes(),withSeconds(),withNanos()` :  
+  return copy of LocalTime with specified value altered
+
+- `atDate()` : Combine with LocalDate to create LocalDateTime
 
 ### LocalDateTime
 
-TODO
+- LocalDateTime class use the letter T to separate date and time
+- same methods as LocalDate and LocalTime
 
 ### Period
 
-TODO
+- represent a date-based amount in years,months and days.
+- immutable
+- can be defined as positive or negative
+- When you initialize a Period with days more than 31 or months more than 12, it doesn't recalculate its years,months or days component  
+  i.e. Adding a Period of 10 months to a Period of 5 months give 15 months not 1 year and 3 months
 
-### DateTImeFormatter
+#### Period Methods
 
-TODO
+- `of(),ofYears(),ofMonths(),ofWeeks(),ofDays()`: Accept int values
+- `parse(PnYnMnD) or parse(PnW)` : Parse from string, where n represents a number and letters(P,Y,M,D,W) represent parse,year,month,day and week
+- `between()` : accepts two LocalDate and returns a Period. The first date is included, but the second date is excluded.
+- `getYears(),getMonths(),getDays()`
+- `isNegative()` : return true if any of three units of Period is negative
+- `isZero` : Period is zero if all three units are zero
+- `minus(Period),minusDays(),minusWeeks(),minusMonths(),minusYears()`
+- `plus(Period),plusDays(),plusWeeks(),plusMonths(),plusYears()`
+- `multipliedBy()` : modify all elements of a Period
+- `toTotalMonths()` : return total number of months in the period by multplying the number of years by 12 and adding the number of months
+
+### DateTimeFormatter
+
+#### Instantiate DateTimeFormatter
+
+- By calling ofLocalizedDate,ofLocalizedTime,and ofLocalizedDateTime method, passing it a FormatStyle value
+
+| FormatStyle        | Example                 |
+| ------------------ | ----------------------- |
+| FormatStyle.FULL   | Saturday,August 11,2057 |
+| FormatStyle.LONG   | August 11,2057          |
+| FormatStyle.MEDIUM | Aug 11, 2057            |
+| FormatStyle.SHORT  | 8/11/57                 |
+
+- By access public static fields of DateTimeFormatter
+
+``` java
+DateTimeFormatter formatter5 = DateTimeFormatter.ISO_DATE;
+```
+
+| Formatter      | Example                 |
+| -------------- | ----------------------- |
+| Basic_ISO_DATE | 20570811                |
+| ISO_DATE       | 2057-0-11               |
+| ISO_TIME       | 14:30:15.312            |
+| ISO_DATE_TIME  | 2057-08-11T14:30:15.312 |
+
+- By using the ofPattern() and passing it a string value
+
+``` java
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+```
