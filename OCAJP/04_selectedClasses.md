@@ -75,7 +75,7 @@
 
 ## String
 
-QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
 
 > Class: A class defines object properties  
 > Object: An instance of the class
@@ -199,7 +199,7 @@ System.out.println(var1.equals(var4)); //true
 
 ## StringBuilder
 
-QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
 
 ### Comparison with String and StringBuffer
 
@@ -302,7 +302,7 @@ System.out.println(sb1); //0123456
 
 ## Arrays
 
-QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
 
 ### What is an array
 
@@ -463,7 +463,7 @@ int multiArr[][] = new int[2][];
 
 ## ArrayList
 
-QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
 
 ### What is an ArrayList
 
@@ -600,6 +600,8 @@ System.out.println(myArrList.contains(sb1));
 
 ## Comparing object for equality
 
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
+
 ### method equals
 
 #### default implementation
@@ -648,7 +650,7 @@ public boolean equals(Object anObject){
 
 ## Calendar
 
-![prefixInDateAPI](images/prefixInDateAPI.png)
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist); [Comparing object for equality](#comparing-object-for-equality); [Calendar](#calendar)
 
 ### LocalDate
 
