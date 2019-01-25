@@ -14,7 +14,8 @@
     - [5. replace()](#5-replace)
     - [6. length()](#6-length)
     - [7. startWith() & beginWidth()](#7-startwith--beginwidth)
-  - [Operators](#operators)
+  - [Concatenation: + and +=](#concatenation--and)
+  - [Equality: == and !=; equals()](#equality--and--equals)
 - [StringBuilder](#stringbuilder)
   - [Comparison with String and StringBuffer](#comparison-with-string-and-stringbuffer)
   - [Creating StringBuilder](#creating-stringbuilder)
@@ -69,14 +70,18 @@
     - [Period Methods](#period-methods)
   - [DateTimeFormatter](#datetimeformatter)
     - [Instantiate DateTimeFormatter](#instantiate-datetimeformatter)
+    - [format()](#format)
+    - [parse()](#parse)
 
 ## String
 
-- Class. Default value is null.
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+
 > Class: A class defines object properties  
 > Object: An instance of the class
 
-- Immutable => Once created, a string value can't be modified. String methods that return a modified String value returned a new String object with the modified value. Original String value remains the same.
+- Immutable sequence of characters. Default value is null
+- None of the methods defined in class String can modify its value
 
 ### Creating String
 
@@ -85,21 +90,9 @@
 
 ``` java
 String str1 = new String("Paul");
-String str2 = new String("Paul");
-System.out.println(str1 == str2); //false
 
 StringBuilder sd1 = new StringBuilder("String Builder");
 String str5 = new String(sd1);
-StringBufffer sd1 = new StringBufffer("String Buffer");
-String str6 = new String(sd2);
-
-String str3 = "Harry";
-String str4 = "Harry";
-System.out.println(str3 == str4); //true
-
-System.out.println("Morning");
-
-//Total of 6 String objects created in this example
 ```
 
 ### String Methods
@@ -118,14 +111,12 @@ System.out.println(letters.charAt(3)); //'A'
 
 #### 2. indexOf()
 
-- search for first matching position of char or String and return its index
+- search for first or specified matching position of char or String and return its index
 - return -1 if no match
-- By default, search from first char but you can also set starting position
 
 ``` java
 String letters = "ABCAB";
 System.out.println(letters.indexOf('B')); //-1
-System.out.println(letters.indexOf("S")); //-1
 System.out.println(letters.indexOf("CA")); //2
 System.out.println(letters.indexOf('B',2)); //4
 ```
@@ -133,7 +124,7 @@ System.out.println(letters.indexOf('B',2)); //4
 #### 3. subString()
 
 - return a substring of a String from the position specified to the end of String
-- substring method doesn't include character at end position
+- doesn't include character at end position
   - Length of String returned by subString = end - start
 
 ``` java
@@ -145,7 +136,7 @@ System.out.println(letters.subString(1,3)); //"BC"
 #### 4. trim()
 
 - return a new String by removing all leading and trailing *white space*(new lines,spaces or tabs) in a String
-- method doesn't remove the space within a String
+- doesn't remove the space within a String
 
 ``` java
 String letters = " AB CAB      ";
@@ -164,8 +155,6 @@ System.out.println(letters.replace("CA",12)); //"AB12b"
 
 #### 6. length()
 
-- return length of String
-
 ``` java
 System.out.println(("Shreya".length()); //6
 ```
@@ -180,9 +169,7 @@ System.out.println(letters.replace('B','b')); //"AbCAb"
 System.out.println(letters.replace("CA",12)); //"AB12b"
 ```
 
-### Operators
-
-- Concatenation: + and +=**
+### Concatenation: + and +=
 
 ``` java
 String aString = 10 + 12 + "OCJA";
@@ -193,7 +180,7 @@ aString = "" + 10 + 12 + "OCJA";
 System.out.println(aString); //"1012OCJA"
 ```
 
-- Equality: == and !=; equals()**
+### Equality: == and !=; equals()
 
 ==  compares whether the reference variables refer to same objects, and method **equals** compares the String values for equality.  
 
@@ -212,6 +199,8 @@ System.out.println(var1.equals(var4)); //true
 
 ## StringBuilder
 
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+
 ### Comparison with String and StringBuffer
 
 - **String:** immutable. Creates new String objects instead of modifying existing one
@@ -220,12 +209,9 @@ System.out.println(var1.equals(var4)); //true
 
 ### Creating StringBuilder
 
-can be created using overloaded constructors
+overloaded constructors which can accept either a String, StringBuilder,an int value to specify its capacity, or nothing
 
 ``` java
-StringBuilder sb1 = new StringBuilder();
-StringBuilder sb2 = new StringBuilder(sb1);
-StringBuilder sb3 = new StringBuilder(50);
 StringBuilder sb4 = new StringBuilder("Shreya Gupta");
 ```
 
@@ -282,7 +268,7 @@ System.out.println(sb2); //013456
 
 #### 4. reverse()
 
-reverse sequence of characters. Can't use method reverse to reverse a substring of StringBuider.
+reverse sequence of characters. Can't use method reverse to reverse a substring of StringBuilder.
 
 ``` java
 StringBuilder sb1 = new StringBuilder("0123456");
@@ -316,18 +302,18 @@ System.out.println(sb1); //0123456
 
 ## Arrays
 
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
+
 ### What is an array
 
 - An object that stores a collection of primitive data types or objects.
 - multidimensional array can be asymmetrical with different number of columns for each rows.
+- creation of array involves: declaration, allocation, initialization
 - `length` : to find no. of elements in array. *[Note it is not length() like in String]*
 
 #### 1. Array declaration
 
-To declare an array, specfy its type followed by its name.  
-Square brackets can follow by type or name.
-
-> Arrays can be of any data type other than null 
+Composed of an array type, variable name, and one or more occurences of []. Creates a variable that refer to null
 
 ``` java
 int[] multiArr[];
@@ -340,6 +326,7 @@ int[] anArr;
 
 #### 2. Array allocation
 
+- Allocate memory for the elements of an array
 - Size must be integer.
 - Size **can't expand or reduce** once allocated by keyword **new**.  
   i.e. array element can set null but cannot be removed
@@ -475,6 +462,8 @@ int multiArr[][] = new int[2][];
 ```
 
 ## ArrayList
+
+QuickLinks: [String](#String); [StringBuilder](#stringbuilder); [Arrays](#arrays); [ArrayList](#arraylist)
 
 ### What is an ArrayList
 
@@ -659,7 +648,7 @@ public boolean equals(Object anObject){
 
 ## Calendar
 
-![replaceComparison](images/prefixInDateAPI.png)
+![prefixInDateAPI](images/prefixInDateAPI.png)
 
 ### LocalDate
 
@@ -817,15 +806,39 @@ LocalDate date3 = LocalTime.now();
 DateTimeFormatter formatter5 = DateTimeFormatter.ISO_DATE;
 ```
 
-| Formatter      | Example                 |
-| -------------- | ----------------------- |
-| Basic_ISO_DATE | 20570811                |
-| ISO_DATE       | 2057-0-11               |
-| ISO_TIME       | 14:30:15.312            |
-| ISO_DATE_TIME  | 2057-08-11T14:30:15.312 |
+| Formatter                         | Example                 |
+| --------------------------------- | ----------------------- |
+| Basic_ISO_DATE                    | 20570811                |
+| ISO_DATE/ISO_LOCAL_DATE           | 2057-0-11               |
+| ISO_TIME/ISO_LOCAL_TIME           | 14:30:15.312            |
+| ISO_DATE_TIME/ISO_LOCAL_DATE_TIME | 2057-08-11T14:30:15.312 |
 
 - By using the ofPattern() and passing it a string value
 
+Note that an uppercase letter represents a bigger duration period. i.e. M is for a month and m is for minutes
+
 ``` java
-DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy MM dd");
+DateTimeFormatter d1 = DateTimeFormatter.ofPattern("yyyy MM dd");
+DateTimeFormatter d2 = DateTimeFormatter.ofPattern("Y M D");
+DateTimeFormatter t1 = DateTimeFormatter.ofPattern("H h m s");
 ```
+
+#### format()
+
+- Formats a date or time object to a String using the rules of the formatter
+- When calling format on a LocalDate, LocalTime, or LocalDateTime, pass a DateTimerFormmater as parameter.
+- When calling format on a DateTimeFormatter, pass LocalDate, LocalTime, or LocalDateTime as method argument.
+
+``` java
+//formatter here defines rules to form a date object.
+//runtime exception if time object is passed into this format
+DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+LocalDate date = LocalDate.of(2057,8,11);
+System.out.println(formatter.format(date));
+```
+
+#### parse()
+
+To parse a date or time object, you can use either the static parse method in date/time objects or the instance parse method in the DateTimeFormatter.
+
+![calendarParse](images/calendarParse.png)
